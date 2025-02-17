@@ -1,8 +1,11 @@
-import express from "express";
+import express, { Request, Response } from "express";
+
 import cors from "cors";
 
 import setupDatabase from "./db/config/syncDatabase";
 import setupBasics from "./db/config/resReqConf";
+
+import db from "./db/index.js";
 
 const app = express();
 
@@ -18,8 +21,20 @@ setupBasics(app);
 app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
-  res.send("Hello World");
+  res.send({
+    message: "WELCOME TO AIRAKAZ.FR API",
+  });
 });
+
+const { dbModels } = db;
+app.get("/users", async (req, res) => {
+  const users = await dbModels.user.findAll();
+
+  res.send({
+    users,
+  });
+});
+
 const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3333;
 
 if (process.env.NODE_ENV !== "test") {

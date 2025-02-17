@@ -1,5 +1,5 @@
 import { Options, Sequelize } from "sequelize";
-import { config } from "../env";
+import { config } from "../env.js";
 
 import { initModels as init_models } from "../models/init-models";
 
@@ -8,12 +8,15 @@ const retry = {
   match: /.*/,
 };
 
-const CONFIGURATION: Options = {
+const CONFIGURATION: any = {
   host: config.SQL.DB_HOST,
   port: parseInt(config.SQL.DB_PORT, 10),
   dialect: "mysql",
+
   define: {
     underscored: true,
+
+    underscoredAll: true,
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
