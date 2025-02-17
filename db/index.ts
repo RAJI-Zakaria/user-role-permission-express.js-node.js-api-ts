@@ -1,24 +1,24 @@
-const Sequelize = require("sequelize");
-const { SQL } = require("../env");
-const init_models = require("../models/init-models");
+import { Options, Sequelize } from "sequelize";
+import { config } from "../env";
+
+import { initModels as init_models } from "../models/init-models";
 
 const retry = {
   max: Infinity,
   match: /.*/,
 };
 
-const CONFIGURATION = {
-  host: SQL.DB_HOST,
-  port: SQL.DB_PORT,
+const CONFIGURATION: Options = {
+  host: config.SQL.DB_HOST,
+  port: parseInt(config.SQL.DB_PORT, 10),
   dialect: "mysql",
   define: {
     underscored: true,
-    underscoredAll: true,
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
   },
-  logging: SQL.DB_LOGGING === "true" ? console.log : false,
+  logging: config.SQL.DB_LOGGING === "true" ? console.log : false,
   // timezone:  "+02:00",
   timezone: "+01:00",
   pool: {
@@ -31,14 +31,12 @@ const CONFIGURATION = {
 };
 
 const dbInstance = new Sequelize(
-  SQL.DB_NAME,
-  SQL.DB_USER,
-  SQL.DB_PASS,
+  config.SQL.DB_NAME,
+  config.SQL.DB_USER,
+  config.SQL.DB_PASS,
   CONFIGURATION
 );
 
-const db = init_models(dbInstance);
+const dbModels = init_models(dbInstance);
 
-db.dbInstance = dbInstance;
-
-module.exports = db;
+export default { dbModels, dbInstance };

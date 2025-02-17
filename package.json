@@ -1,17 +1,13 @@
 {
   "name": "user-role-permission-express-api-ts",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
+    "dev": "nodemon --exec ts-node index.ts",
+    "start": "TZ='Europe/Paris' NODE_ENV=development nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^22.10.1"
+  "ts-node": {
+    "esm": true
   },
-  "dependencies": {
-    "sequelize": "^6.37.5"
-  }
-}
+  "devDependencies": {}
