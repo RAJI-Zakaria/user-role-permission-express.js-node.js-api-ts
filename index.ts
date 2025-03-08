@@ -5,7 +5,7 @@ import cors from "cors";
 import setupDatabase from "./db/config/syncDatabase";
 import setupBasics from "./db/config/resReqConf";
 
-import db from "./db/index.js";
+import routes from "./routes";
 
 const app = express();
 
@@ -26,14 +26,8 @@ app.get("/", async (req, res) => {
   });
 });
 
-const { dbModels } = db;
-app.get("/users", async (req, res) => {
-  const users = await dbModels.user.findAll();
-
-  res.send({
-    users,
-  });
-});
+// use the routes
+app.use("/api", routes);
 
 const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3333;
 
