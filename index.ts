@@ -38,7 +38,9 @@ app.get("/users", async (req, res) => {
 const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3333;
 
 if (process.env.NODE_ENV !== "test") {
-  app.listen(port, "0.0.0.0", () => console.log("Server is running..."));
+  app.listen(port, "0.0.0.0", () =>
+    console.log("Server is running on http://localhost:" + port)
+  );
 }
 
 export default app;
