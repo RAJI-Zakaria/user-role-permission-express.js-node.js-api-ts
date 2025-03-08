@@ -4,7 +4,7 @@ const { dbModels } = db;
 const { user: MUser } = dbModels;
 
 // get all users
-const getAllUsers = async () => {
+const readUsers = async () => {
   try {
     const users = await MUser.findAll();
     return users;
@@ -13,4 +13,44 @@ const getAllUsers = async () => {
   }
 };
 
-export default { getAllUsers };
+const createUser = async (data: any) => {
+  try {
+    const user = await MUser.create(data);
+    return user;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+const updateUser = async (id: number, data: any) => {
+  try {
+    const user = await MUser.update(data, {
+      where: {
+        id,
+      },
+    });
+    return user;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+const removeUser = async (id: number) => {
+  try {
+    const user = await MUser.destroy({
+      where: {
+        id,
+      },
+    });
+    return user;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export default {
+  readUsers,
+  createUser,
+  updateUser,
+  removeUser,
+};
