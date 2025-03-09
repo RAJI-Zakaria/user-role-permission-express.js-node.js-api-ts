@@ -11,6 +11,21 @@ const readUsers = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+// get one user
+const readUser = async (req: Request<IDParams>, res: Response) => {
+  const { id } = req.params;
+  try {
+    const user = await userService.readUser(id);
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    res.json(user);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // CRUD
 const createUser = async (req: Request, res: Response) => {
@@ -42,4 +57,4 @@ const deleteUser = async (req: Request<IDParams>, res: Response) => {
   }
 };
 
-export { readUsers, createUser, updateUser, deleteUser };
+export { readUsers, readUser, createUser, updateUser, deleteUser };

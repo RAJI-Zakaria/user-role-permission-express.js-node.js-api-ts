@@ -13,6 +13,15 @@ const readUsers = async () => {
   }
 };
 
+const readUser = async (id: number) => {
+  try {
+    const user = await MUser.findByPk(id);
+    return user;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
 const createUser = async (data: any) => {
   try {
     const user = await MUser.create(data);
@@ -49,6 +58,7 @@ const removeUser = async (id: number) => {
 };
 
 export default {
+  readUser,
   readUsers,
   createUser,
   updateUser,
